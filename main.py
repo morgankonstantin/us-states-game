@@ -1,8 +1,5 @@
 import turtle
-
-import pandas
 import pandas as pd
-from pandas import DataFrame
 
 # Screen setup
 screen = turtle.Screen()
@@ -22,11 +19,8 @@ while len(guessed_states) < 50:
     answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Correct",
                                     prompt="What's another state name?").title()  # Convert the input to title case
     if answer_state == "Exit":
-        missing_states = []
-        for state in states_list:
-            if state not in guessed_states:
-                missing_states.append(state)
-        new_data = pandas.DataFrame(missing_states)  # Convert list to DataFrame
+        missing_states = [state for state in states_list if state not in guessed_states]
+        new_data = pd.DataFrame(missing_states)  # Convert list to DataFrame
         new_data.to_csv("states_to_learn")  # Create a new csv with the missed states
         break
     # Check for the answer in the states_list, place label on the map if the guess is correct
